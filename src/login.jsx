@@ -7,19 +7,24 @@ const Login = () => {
 
   const[email,setEmail]=useState("abii@gmail.com");
   const[password,setPassword]=useState("Password@123");
+  const[error,seterror]=useState("")
   const dispatch=useDispatch();
   const navigate =useNavigate();
   const handleLogin=async()=>{
     
     try{
-      axios.post("http://localhost:3000/login",{email,password},{withCredentials:true})
-    .then((res)=>{
-      console.log(res.data.data);
+      const res = await axios.post(
+        "http://localhost:3000/login",
+        { email, password },
+        { withCredentials: true }
+      );
+
       dispatch(addUser(res.data.data))
       navigate('/')
-    })
+    
   }catch(err){
-    console.log(err);
+    seterror(err?.response?.data||"Something went wrong");
+    console.log(err?.response?.message);
   }
   
 };
@@ -34,6 +39,7 @@ const Login = () => {
       <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)
       }}placeholder="Password" className="input input-bordered w-full max-w-xs mb-4" />
     </div>
+    <p className='text-red-500'>{error.message}</p>
     <div className="card-actions justify-center">
       <button className="btn btn-primary" onClick={handleLogin}>Login</button>
     </div>
