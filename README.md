@@ -10,3 +10,5 @@
 -install
 -daisyui - tailwind css frameword
 -add navbar component
+-install react router dom
+-create a login page
