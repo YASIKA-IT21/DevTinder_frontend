@@ -25,6 +25,7 @@ const Feed = () => {
   useEffect(() => {
     getfeed();
   }, []);
+  if(feed<=0)return <h1>No More Persons to View</h1>
 
   
 

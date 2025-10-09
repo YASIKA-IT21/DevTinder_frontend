@@ -2,12 +2,22 @@ import React, { useEffect } from 'react'
 import { BASE_URL } from '../utils/constant'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { addrequest } from '../utils/requestSlice';
+import { addrequest, removerequest } from '../utils/requestSlice';
 import { X, Heart } from "lucide-react";
 
 const Requests = () => {
     const requests = useSelector((store)=>store.request);
     const dispatch = useDispatch();
+
+    const reviewRequest=async(status,_id)=>{
+        try{
+            const res = axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{withCredentials:true})
+            dispatch(removerequest(_id))
+
+        }catch(err){
+
+        }
+    }
 
     const request = async()=>{
         try{
@@ -25,7 +35,7 @@ const Requests = () => {
 
     },[])
     if (!requests) return <p>Loading...</p>;
-  if (requests.length === 0) return <h1>No requests Found</h1>;
+  if (requests.length === 0) return <h1 className='flex justify-center my-44'>No requests Found</h1>;
 
   return (
     <div className="m-6">
@@ -56,10 +66,14 @@ const Requests = () => {
                 {request.fromuserId.age || "No bio available"}
               </p>
               <div className="flex justify-center gap-8 mt-5">
-          <button className="flex items-center justify-center w-16 h-16 rounded-full shadow-lg bg-gray-400 hover:scale-110 transition">
+          <button className="flex items-center justify-center w-16 h-16 rounded-full shadow-lg bg-gray-400 hover:scale-110 transition" onClick={()=>{
+            reviewRequest("rejected",request._id)
+          }}>
             <X className="w-7 h-7 text-white" />
           </button>
-          <button className="flex items-center justify-center w-16 h-16 rounded-full shadow-lg bg-pink-400 hover:scale-110 transition">
+          <button className="flex items-center justify-center w-16 h-16 rounded-full shadow-lg bg-pink-400 hover:scale-110 transition" onClick={()=>{
+            reviewRequest("accepted",request._id)
+          }}>
             <Heart className="w-7 h-7 text-white" />
           </button>
         </div>
