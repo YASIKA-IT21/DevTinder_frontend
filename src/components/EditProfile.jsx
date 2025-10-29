@@ -21,7 +21,6 @@ const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Populate fields when `user` prop changes
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName || "");
@@ -55,7 +54,6 @@ const EditProfile = ({ user }) => {
         setError("");
       }
     } catch (err) {
-      console.log(err?.response?.data);
       const data = err?.response?.data;
       setError(
         typeof data === "string" ? data : data?.message || "Something went wrong"
@@ -64,99 +62,100 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="flex justify-center my-10 gap-10 items-stretch ">
-      {/* Edit Profile Card */}
-      {/* Edit Profile Card */}
-<div className="card bg-gray-200 w-96 h-[500px] flex flex-col">
-  <div className="card-body overflow-y-auto">
-    <h2 className="card-title justify-center text-black">Edit Profile</h2>
+    <div className="min-h-screen bg-gradient-to-r from-purple-100 via-pink-50 to-purple-100 py-10 flex justify-center items-start">
+      <div className="flex flex-col md:flex-row justify-center gap-10 items-stretch w-full max-w-7xl px-6">
+        {/* Edit Profile Card */}
+        <div className="card bg-gray-200 w-96 h-[500px] flex flex-col">
+          <div className="card-body overflow-y-auto">
+            <h2 className="card-title justify-center text-black">Edit Profile</h2>
 
-    <label className="label text-black">First Name</label>
-    <input
-      type="text"
-      value={firstName}
-      onChange={(e) => setFirstName(e.target.value)}
-      className="input input-bordered w-full mb-2"
-    />
+            <label className="label text-black">First Name</label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="input input-bordered w-full mb-2"
+            />
 
-    <label className="label text-black">Last Name</label>
-    <input
-      type="text"
-      value={lastName}
-      onChange={(e) => setLastName(e.target.value)}
-      className="input input-bordered w-full mb-2"
-    />
+            <label className="label text-black">Last Name</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="input input-bordered w-full mb-2"
+            />
 
-    <label className="label text-black">Age</label>
-    <input
-      type="number"
-      value={age}
-      onChange={(e) => setAge(e.target.value)}
-      className="input input-bordered w-full mb-2"
-    />
+            <label className="label text-black">Age</label>
+            <input
+              type="number"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              className="input input-bordered w-full mb-2"
+            />
 
-    <label className="label text-black">Gender</label>
-    <select
-      value={gender}
-      onChange={(e) => setGender(e.target.value)}
-      className="select select-bordered w-full mb-2"
-    >
-      <option value="">Select gender</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="other">Other</option>
-    </select>
+            <label className="label text-black">Gender</label>
+            <select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="select select-bordered w-full mb-2"
+            >
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
 
-    <label className="label text-black">Skills</label>
-    <input
-      type="text"
-      value={skillsInput}
-      onChange={handleSkillsChange}
-      className="input input-bordered w-full mb-2"
-    />
+            <label className="label text-black">Skills</label>
+            <input
+              type="text"
+              value={skillsInput}
+              onChange={handleSkillsChange}
+              className="input input-bordered w-full mb-2"
+            />
 
-    <label className="label text-black">Photo URL</label>
-    <input
-      type="text"
-      value={photoUrl}
-      onChange={(e) => setPhotoUrl(e.target.value)}
-      className="input input-bordered w-full mb-2"
-    />
+            <label className="label text-black">Photo URL</label>
+            <input
+              type="text"
+              value={photoUrl}
+              onChange={(e) => setPhotoUrl(e.target.value)}
+              className="input input-bordered w-full mb-2"
+            />
 
-    <label className="label text-black">About</label>
-    <textarea
-      value={about}
-      onChange={(e) => setAbout(e.target.value)}
-      className="textarea textarea-bordered w-full mb-2"
-    />
+            <label className="label text-black">About</label>
+            <textarea
+              value={about}
+              onChange={(e) => setAbout(e.target.value)}
+              className="textarea textarea-bordered w-full mb-2"
+            />
 
-    <label className="label text-black">Email</label>
-    <input
-      type="email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      className="input input-bordered w-full mb-4"
-    />
+            <label className="label text-black">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input input-bordered w-full mb-4"
+            />
 
-    {error && <p className="text-red-500 mb-2">{error}</p>}
+            {error && <p className="text-red-500 mb-2">{error}</p>}
 
-    <div className="card-actions justify-center">
-      <button
-        className="btn btn-primary w-full"
-        onClick={handleSaveprofile}
-      >
-        Save Profile
-      </button>
-    </div>
-  </div>
-</div>
+            <div className="card-actions justify-center">
+              <button
+                className="btn btn-primary w-full"
+                onClick={handleSaveprofile}
+              >
+                Save Profile
+              </button>
+            </div>
+          </div>
+        </div>
 
-      {/* User Card (wrapped to allow stretch) */}
-      <div className="w-96 h-full">
-        <Usercard
-          user={{ firstName, lastName, age, gender, about, skills, photoUrl, email }}
-          showActions={false}
-        />
+        {/* User Card */}
+        <div className="w-96 h-full">
+          <Usercard
+            user={{ firstName, lastName, age, gender, about, skills, photoUrl, email }}
+            showActions={false}
+          />
+        </div>
       </div>
 
       {toast && (

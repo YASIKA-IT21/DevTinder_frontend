@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../utils/constant';
 const Login = () => {
 
   const[email,setEmail]=useState("abii@gmail.com");
@@ -14,6 +15,20 @@ const Login = () => {
   const dispatch=useDispatch();
   const navigate =useNavigate();
   
+
+  useEffect(() => {
+    const logoutUser = async () => {
+      try {
+        await axios.post(BASE_URL+"/logout", {}, { withCredentials: true });
+        dispatch(addUser(null)); // clear user data from Redux
+        console.log("User logged out successfully");
+      } catch (err) {
+        console.log("Logout failed or no active session:", err);
+      }
+    };
+    logoutUser();
+  }, [dispatch]);
+
   const handleLogin=async()=>{
     
     try{
@@ -24,7 +39,7 @@ const Login = () => {
       );
 
       dispatch(addUser(res.data.data))
-      navigate('/')
+      navigate('/feed')
     
   }catch(err){
     seterror(err?.response?.data||"Something went wrong");
@@ -36,7 +51,7 @@ const handlesignup=async()=>{
   try{
     const res = await axios.post("http://localhost:3000/user",{firstName,lastName,email,password},{withCredentials:true});
     console.log(res.data.user)
-    dispatch(addUser(res.data.data));
+    dispatch(addUser(res.data.user));
 
     navigate('/profile')
 

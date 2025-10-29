@@ -11,7 +11,7 @@ const Profile = () => {
 
   return (
     <div>
-      <h1>Profile page</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">✨ Your Profile</h1>
       <EditProfile user={user} />
     </div>
   );
